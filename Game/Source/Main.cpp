@@ -27,13 +27,9 @@ int main(int argc, char* argv[]) {
 
 	vector<Vector2> points;
 
-	/*for (int i=0; i < 100; i++) {
-		points.push_back(Vector2{rand() % 800, rand() % 600});
-	}*/
-
 	//main loop
-	bool kys = false;
-	while (!kys) {
+	bool end = false;
+	while (!end) {
 		// input
 		// update
 		// draw
@@ -42,12 +38,11 @@ int main(int argc, char* argv[]) {
 		input.Update();
 
 		if (input.GetKeyDown(SDL_SCANCODE_ESCAPE)) {
-			kys = true;
+			end = true;
 		}
 
 		//Update
 		Vector2 mousePosition = input.GetMousePosition();
-		//cout << mousePosition.x << " " << mousePosition.y << endl;
 
 		if (input.getMouseButtonDown(0) && !input.getPrevMouseButtonDown(0)) {
 			cout << "Mouse pressed" << endl;
@@ -60,30 +55,17 @@ int main(int argc, char* argv[]) {
 			}
 		}
 
-
-
-		// [p,p,p,p]
-	/*	Vector2 speed{ 0.1f, -0.1f };
-		for (Vector2& point : points) {
-			point = point + speed;
-		}*/
 		//Draw
 		//clear screen
 		renderer.SetColor(0, 0, 0, 0);
 		renderer.BeginFrame();
 
-		////draw line
+		////draw from mouse
 		renderer.SetColor(255, 255, 255, 0);
 		for (int i = 0; points.size() > 1 && i < points.size() - 1; i++) {
 			renderer.SetColor(rand() % 256, rand() % 256, rand() % 256, rand() % 256);
 			renderer.DrawLine(points[i].x,points[i].y, points[i + 1].x, points[i + 1].y);
 		}
-		//renderer.DrawLine(v1.x,v1.y,v2.x,v2.y);
-
-		//for (int i = 0; i < points.size() - 1; i++) {
-		//	renderer.SetColor(rand() % 256, rand() % 256, rand() % 256, rand() % 256);
-		//	renderer.DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
-		//}
 
 		renderer.EndFrame();
 	}
