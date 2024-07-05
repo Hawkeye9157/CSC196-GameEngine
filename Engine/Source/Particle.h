@@ -7,17 +7,17 @@ struct Particle {
 	Vector2 velocity{ 0,0 };
 	float lifespan = 0;
 	//color codes
-	uint8_t r = 0;
-	uint8_t g = 0;
-	uint8_t b = 0;
-	uint8_t a = 0;
+	int r = 0;
+	int g = 0;
+	int b = 0;
+	int a = 0;
 
 	Particle() = default;
 	Particle(Vector2 position, Vector2 velocity)
 		: position{ position },
 		velocity{ velocity } {}
 
-	Particle(Vector2 position, Vector2 velocity, float lifespan,uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+	Particle(Vector2 position, Vector2 velocity, float lifespan,int r, int g, int b, int a)
 		: position{ position },
 		velocity{ velocity },
 		lifespan{lifespan},

@@ -60,9 +60,9 @@ int main(int argc, char* argv[]) {
 		if (input.getMouseButtonDown(0)) {
 			particles.push_back(Particle{ {mousePosition.x,mousePosition.y},
 				{randomf(-500.0f,500.0f), randomf(-500.0f,500.0f)},{randomf(1.0f,5.0f)},
-				255,255,255,0 });
+				//255,255,255,0 });
 				//todo fix
-				//random(0,255),random(0,255),random(0,255),random(0,255)});		
+				random(0,255),random(0,255),random(0,255),random(0,255)});		
 		}
 
 		//Draw
