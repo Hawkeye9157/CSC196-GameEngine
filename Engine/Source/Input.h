@@ -11,7 +11,7 @@ public:
 
 	bool Initialize();
 	void Shutdown();
-	
+
 	void Update();
 
 	//mouse
@@ -22,8 +22,6 @@ public:
 	//keyboard
 	bool GetKeyDown(uint8_t key) { return m_keyboardState[key]; }
 	bool GetPrevKeyDown(uint8_t key) { return m_prevKeyboardState[key]; }
-
-protected:
 
 private:
 

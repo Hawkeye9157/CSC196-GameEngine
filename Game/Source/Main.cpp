@@ -1,6 +1,9 @@
 #include "Renderer.h"
 #include "Vector2.h"
 #include "Input.h"
+#include "Particle.h"
+#include "Random.h"
+#include "ETimer.h"
 
 #include <iostream>
 #include <SDL.h>
@@ -12,7 +15,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
-	//create systems
+	//create engine systems
 	Renderer renderer;
 	renderer.Initialize();
 	renderer.CreateWindow("Game Engine", 800, 600);
@@ -20,12 +23,13 @@ int main(int argc, char* argv[]) {
 	Input input;
 	input.Initialize();
 
-	//Game code
+	Time time;
 
-	Vector2 v1{ 400, 300};
-	Vector2 v2{ 250, 375};
+	vector<Particle> particles;
 
 	vector<Vector2> points;
+	
+	//Game code
 
 	//main loop
 	bool end = false;
@@ -35,6 +39,8 @@ int main(int argc, char* argv[]) {
 		// draw
 		 
 		//Input
+		time.Tick();
+		cout << time.GetTime() << endl;
 		input.Update();
 
 		if (input.GetKeyDown(SDL_SCANCODE_ESCAPE)) {
@@ -42,17 +48,21 @@ int main(int argc, char* argv[]) {
 		}
 
 		//Update
-		Vector2 mousePosition = input.GetMousePosition();
-
-		if (input.getMouseButtonDown(0) && !input.getPrevMouseButtonDown(0)) {
-			cout << "Mouse pressed" << endl;
-			points.push_back(mousePosition);
+		renderer.SetColor(255, 255, 255, 0);
+		for (Particle& particle : particles) {
+			renderer.SetColor(255, 255, 255, 0);
+			particle.update(time.GetDeltaTime());
+			if (particle.position.x > 800) particle.position.x = 0;
+			if (particle.position.x < 0) particle.position.x = 800;
 		}
-		if (input.getMouseButtonDown(0) && input.getPrevMouseButtonDown(0)) {
-			float distance = (points.back() - mousePosition).length();
-			if (distance > 5) {
-				points.push_back(mousePosition);
-			}
+
+		Vector2 mousePosition = input.GetMousePosition();
+		if (input.getMouseButtonDown(0)) {
+			particles.push_back(Particle{ {mousePosition.x,mousePosition.y},
+				{randomf(-500.0f,500.0f), randomf(-500.0f,500.0f)},{randomf(1.0f,5.0f)},
+				255,255,255,0 });
+				//todo fix
+				//random(0,255),random(0,255),random(0,255),random(0,255)});		
 		}
 
 		//Draw
@@ -60,11 +70,9 @@ int main(int argc, char* argv[]) {
 		renderer.SetColor(0, 0, 0, 0);
 		renderer.BeginFrame();
 
-		////draw from mouse
-		renderer.SetColor(255, 255, 255, 0);
-		for (int i = 0; points.size() > 1 && i < points.size() - 1; i++) {
-			renderer.SetColor(rand() % 256, rand() % 256, rand() % 256, rand() % 256);
-			renderer.DrawLine(points[i].x,points[i].y, points[i + 1].x, points[i + 1].y);
+		for (Particle particle : particles) {
+			renderer.SetColor(particle.r,particle.g,particle.b,particle.a);
+			particle.draw(renderer);
 		}
 
 		renderer.EndFrame();
