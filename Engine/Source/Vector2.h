@@ -24,6 +24,16 @@ struct Vector2 {
 	Vector2 operator * (float s) const { return Vector2{ x * s, y * s }; }
 	Vector2 operator / (float s) const { return Vector2{ x / s, y / s }; }
 
+	Vector2 operator +=(const Vector2& v) { x += v.x; y += v.y; return *this; }
+	Vector2 operator -=(const Vector2& v) { x -= v.x; y -= v.y; return *this; }
+	Vector2 operator *=(const Vector2& v) { x *= v.x; y *= v.y; return *this; }
+	Vector2 operator /=(const Vector2& v) { x /= v.x; y /= v.y; return *this; }
+
+	Vector2 operator += (float s)  { return Vector2{ x += s, y += s }; }
+	Vector2 operator -= (float s)  { return Vector2{ x -= s, y -= s }; }
+	Vector2 operator *= (float s)  { return Vector2{ x *= s, y *= s }; }
+	Vector2 operator /= (float s)  { return Vector2{ x /= s, y /= s }; }
+
 	float lengthSqr() const{ return (x * x) + (y * y); }
 	float length() const{ return Math::Sqrt(x * x) + (y * y); }
 
