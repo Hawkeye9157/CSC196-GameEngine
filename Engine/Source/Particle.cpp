@@ -11,6 +11,6 @@ void Particle::update(float dt)
 void Particle::draw(Renderer& renderer)
 {
 	if (lifespan >= 0) {
-		renderer.DrawPoint(position.x, position.y);
+		renderer.DrawRect(position.x, position.y,4.0f,4.0f);
 	}
 }

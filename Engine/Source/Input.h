@@ -27,11 +27,11 @@ private:
 
 	//mouse inputs
 	Vector2 m_mousePosition{ 0,0 };
-	array<uint8_t, 3> m_buttonState{0,0,0};
-	array<uint8_t,3> m_prevButtonState{ 0,0,0 };
+	std::array<uint8_t, 3> m_buttonState{0,0,0};
+	std::array<uint8_t,3> m_prevButtonState{ 0,0,0 };
 
 	//keyboard inputs
-	vector<uint8_t> m_keyboardState;
-	vector<uint8_t> m_prevKeyboardState;
+	std::vector<uint8_t> m_keyboardState;
+	std::vector<uint8_t> m_prevKeyboardState;
 	
 };
