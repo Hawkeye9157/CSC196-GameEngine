@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include <iostream>
 
 
@@ -31,7 +32,7 @@ public:
 	int GetHeight() const { return m_height; }
 
 	
-	
+	friend class Text;
 protected:
 
 private:

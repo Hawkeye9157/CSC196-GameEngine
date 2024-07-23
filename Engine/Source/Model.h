@@ -12,6 +12,7 @@ public:
 	Model(const std::vector<Vector2>& points, const Color& color) : m_points{points}, m_color{color} {}
 
 	void Draw(Renderer& renderer,Transform& transform);
+	float GetRadius();
 
 private:
 	std::vector<Vector2> m_points;

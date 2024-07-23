@@ -34,11 +34,13 @@ struct Vector2 {
 	Vector2 operator *= (float s)  { return Vector2{ x *= s, y *= s }; }
 	Vector2 operator /= (float s)  { return Vector2{ x /= s, y /= s }; }
 
-	float lengthSqr() const{ return (x * x) + (y * y); }
-	float length() const{ return Math::Sqrt(x * x) + (y * y); }
+	float LengthSqr() const{ return (x * x) + (y * y); }
+	float Length() const{ return Math::Sqrt(x * x) + (y * y); }
 
 	float Angle() const { return Math::Atan2(y, x); }
 	Vector2 Rotate(float radians) const;
+
+	Vector2 Normalized() const { return *this / Length(); }
 };
 
 inline Vector2 Vector2::Rotate(float radians) const {
