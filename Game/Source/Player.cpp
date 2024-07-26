@@ -12,10 +12,10 @@ void Player::Update(float dt)
 {
 	//movement
 	Vector2 direction{ 0,0 };
-	if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_UP) || g_engine.GetInput().GetKeyDown(SDL_SCANCODE_W)) direction.x = 1;
-	if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_DOWN) || g_engine.GetInput().GetKeyDown(SDL_SCANCODE_S)) direction.x = -1;
-	if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_LEFT) || g_engine.GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.y = -1;
-			if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_RIGHT) || g_engine.GetInput().GetKeyDown(SDL_SCANCODE_D)) direction.y = 1;
+	if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_UP) || g_engine.GetInput().GetKeyDown(SDL_SCANCODE_W)) direction.x += 1;
+	if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_DOWN) || g_engine.GetInput().GetKeyDown(SDL_SCANCODE_S)) direction.x += -1;
+	if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_LEFT) || g_engine.GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.y += -1;
+	if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_RIGHT) || g_engine.GetInput().GetKeyDown(SDL_SCANCODE_D)) direction.y += 1;
 
 	Vector2 acceleration = direction.Rotate(m_transform.rotation) * m_sped;
 	

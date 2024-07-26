@@ -31,7 +31,7 @@ public:
     void Update(float dt) override;
     void Draw(Renderer& renderer) override;
 
-
+    bool close = false;
 
 protected:
     eState m_state{ eState::Title };

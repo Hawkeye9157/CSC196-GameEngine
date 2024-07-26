@@ -15,8 +15,8 @@ public:
 	float GetDeltaTime() const { return m_deltaTime; }
 
 private:
-	float m_time = 0;
-	float m_deltaTime = 0;
+	float m_time = 0.0f;
+	float m_deltaTime = 0.0f;
 
 	clock19::time_point m_startTime;
 	clock19::time_point m_frameTime;

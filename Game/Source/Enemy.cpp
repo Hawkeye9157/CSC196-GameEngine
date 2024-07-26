@@ -18,7 +18,7 @@ void Enemy::Update(float dt)
 void Enemy::OnCollision(Actor* actor)
 {
 	if (actor->GetTag() == "Player" || actor->GetTag() == "PlayerBullet") {
-		//m_scene->GetGame()->AddPoints(100);
+		m_scene->GetGame()->AddPoints(100);
 		m_destroyed = true;
 
 		for (int i = 0; i < 100; i++) {
