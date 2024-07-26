@@ -10,6 +10,7 @@ void ParticleSystem::Update(float dt)
 void ParticleSystem::Draw(Renderer& renderer)
 {
 	for (auto& particle : m_particles) {
+		renderer.SetColor(particle.r, particle.g, particle.b, 1);
 		if (particle.isActive) particle.draw(renderer);
 	}
 }

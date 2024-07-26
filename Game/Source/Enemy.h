@@ -12,6 +12,7 @@ public:
 	virtual void OnCollision(Actor* actor);
 
 private:
-	float m_sped = 10000;
-	float m_fireTimer = 0;
+	float m_sped = 10000.0f;
+	float m_fireTimer = 0.0f;
+	int m_killcount = 0;
 };

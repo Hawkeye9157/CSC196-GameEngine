@@ -21,11 +21,11 @@ bool SpaceGame::Initialize()
 
 
     m_fontLarge = new Font();
-    m_fontLarge->Load("MONIMONI.ttf", 200);
+    m_fontLarge->Load("MONIMONI.ttf", 50);
 
     m_textScore = new Text(m_font);
     m_textLives = new Text(m_font);
-    m_textTitle = new Text(m_font);
+    m_textTitle = new Text(m_fontLarge);
 
     g_engine.GetAudio().AddSound("background.wav");
 
@@ -43,14 +43,14 @@ void SpaceGame::Update(float dt)
     if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_ESCAPE)) {
         close = true;
     }
-    //g_engine.GetAudio().PlaySound("background.wav");
+    
     switch (m_state) {
 
 
     case SpaceGame::eState::Title:
         //draw text
         m_textTitle->Create(g_engine.GetRenderer(), "Space Game", Color{1,0,0,1});
-        
+       // g_engine.GetAudio().PlaySound("background.wav",1);
         if (m_engine->GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) {m_state = SpaceGame::eState::StartGame;}
         break;
 
@@ -59,13 +59,12 @@ void SpaceGame::Update(float dt)
     case SpaceGame::eState::StartGame:
         m_score = 0;
         m_lives = 3;
-
+        m_spawnTime = 1;
+        m_spawnTimer = m_spawnTime;
 
         m_state = eState::StartLevel;
 
         break;
-
-
 
     case SpaceGame::eState::StartLevel:
         m_scene->RemoveAll();
@@ -77,14 +76,17 @@ void SpaceGame::Update(float dt)
                 {-5,5},
                 {5,0}
             };
-            Model* model = new Model{shipPoints, Color{0,0,1,1} };
+            Model* model = new Model{shipPoints, Color{1,0,1,1} };
             auto player = std::make_unique<Player>(400, transform, model);
             player->SetDamping(2.0f);
             player->SetTag("Player");
+           
             m_scene->AddActor(std::move(player));
 
             m_scene->Draw(g_engine.GetRenderer());
+            
         }
+        m_state = eState::Game;
         break;
 
     case SpaceGame::eState::Game:
@@ -99,8 +101,9 @@ void SpaceGame::Update(float dt)
                 {-5,5},
                 {5,0}
             };
-            auto* enemyModel = new Model{ shipPoints, Color{1,0,1,0} };
-            auto enemy = std::make_unique<Enemy>(400.0f, Transform{ {g_engine.GetRenderer().GetWidth(),g_engine.GetRenderer().GetHeight()},0.0f,2.0f }, enemyModel);
+            auto* enemyModel = new Model{ shipPoints, Color{1,0,1,1} };
+            auto enemy = std::make_unique<Enemy>(400.0f, Transform{ 
+                {g_engine.GetRenderer().GetWidth(),g_engine.GetRenderer().GetHeight()},0.0f,2.0f }, enemyModel);
             enemy->SetTag("Enemy");
             enemy->SetDamping(1.0f);
             m_scene->AddActor(std::move(enemy));
@@ -123,7 +126,7 @@ void SpaceGame::Update(float dt)
 
 void SpaceGame::Draw(Renderer& renderer)
 {
-    g_engine.GetRenderer().BeginFrame();
+    
     switch (m_state) {
 
     case SpaceGame::eState::Title:
@@ -144,7 +147,7 @@ void SpaceGame::Draw(Renderer& renderer)
     m_textScore->Create(renderer, text, { 0,1,0,1 });
     m_textScore->Draw(renderer, 20, 20);
     //draw lives
-    text = "Lives: " + std::to_string(m_score);
+    text = "Lives: " + std::to_string(m_lives + (m_score / 100));
     m_textLives->Create(renderer, text, { 0,1,0,1 });
     m_textLives->Draw(renderer, 120, 20);
 

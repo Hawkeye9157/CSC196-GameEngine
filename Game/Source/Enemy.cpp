@@ -20,10 +20,17 @@ void Enemy::OnCollision(Actor* actor)
 	if (actor->GetTag() == "Player" || actor->GetTag() == "PlayerBullet") {
 		m_scene->GetGame()->AddPoints(100);
 		m_destroyed = true;
-
-		for (int i = 0; i < 100; i++) {
-			Particle::Data data{ m_transform.position,Vector2(1, 0).Rotate(randomf(Math::TwoPi)) * 50,randomf(0.5f,2.0f),255,255,255,255 };
-			g_engine.GetPS().AddParticle(data);
+		m_killcount++;
+		if (m_killcount >= 5) {
+			m_scene->GetGame()->AddPoints(500);
+			m_killcount = 0;
 		}
+
+		for (int i = 0; i < 10; i++) {
+			Particle::Data data{ m_transform.position,Vector2(1, 0).Rotate(randomf(Math::TwoPi)) * 50,randomf(0.5f,2.0f),1,0,0,1 };
+			g_engine.GetPS().AddParticle(data);
+			g_engine.GetPS().Draw(g_engine.GetRenderer());
+		}
+		
 	}
 }

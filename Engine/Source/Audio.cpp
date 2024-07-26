@@ -36,7 +36,7 @@ bool Audio::AddSound(const std::string& name)
 	return true;
 }
 
-bool Audio::PlaySound(const std::string& name)
+bool Audio::PlaySound(const std::string& name, int priority)
 {
 	if (m_sounds.find(name) == m_sounds.end()) {
 		if(!AddSound(name)) return false;
@@ -45,4 +45,9 @@ bool Audio::PlaySound(const std::string& name)
 	m_audio->playSound(m_sounds[name], 0, false, nullptr);
 
 	return true;
+}
+
+void Audio::StopSound()
+{
+	
 }

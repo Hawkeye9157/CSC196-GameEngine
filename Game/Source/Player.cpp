@@ -48,10 +48,22 @@ void Player::Update(float dt)
 		bullet->SetTag("Player");
 		m_scene->AddActor(std::move(bullet));
 		
+		m_shotsFired++;
+		if (m_shotsFired >= 50) {
+			m_fireTimer = 3;
+			m_shotsFired = 0;
+		}
+		g_engine.GetAudio().AddSound("gunshot.wav");
+		g_engine.GetAudio().PlaySound("gunshot.wav",2);
 	}
 
 
 	Actor::Update(dt);
+}
+
+void Player::Draw(Renderer& renderer)
+{
+	Actor::Draw(renderer);
 }
 
 void Player::OnCollision(Actor* actor)
@@ -59,6 +71,10 @@ void Player::OnCollision(Actor* actor)
 	if (actor->GetTag() == "Enemy") {
 		m_destroyed = true;
 		//dynamic_cast<SpaceGame*>(m_scene->GetGame())->OnPlayerDeath();
+		g_engine.GetRenderer().SetColor(1, 0, 0, 1);
+		for (int i = 0; i < 50; i++) {
+			g_engine.GetRenderer().DrawPoint(random(g_engine.GetRenderer().GetWidth()),random((g_engine.GetRenderer().GetHeight())));
+		}
 	}
 	
 }
