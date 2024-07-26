@@ -51,16 +51,16 @@ int main(int argc, char* argv[]) {
 	Scene* scene = new Scene();
 
 	Transform transform{ Vector2{randomf(0,800),randomf(0,600)},0,randomf(1,5)};
-	Player* player = new Player(randomf(300,500), transform, model);
+	auto player = std::make_unique<Player>(randomf(300,500), transform, model);
 	player->SetDamping(2.0f);
 	player->SetTag("Player");
-	scene->AddActor(player);
+	scene->AddActor(std::move(player));
 
 	auto* enemyModel = new Model{ points, Color{1,0,1,0} };
-	auto* enemy = new Enemy(400, Transform{ {g_engine.GetRenderer().GetWidth(),g_engine.GetRenderer().GetHeight()},0,2}, enemyModel);
+	auto enemy = std::make_unique<Enemy>(400.0f, Transform{ {g_engine.GetRenderer().GetWidth(),g_engine.GetRenderer().GetHeight()},0.0f,2.0f}, enemyModel);
 	enemy->SetTag("Enemy");
 	enemy->SetDamping(1.0f);
-	scene->AddActor(enemy);
+	scene->AddActor(std::move(enemy));
 
 
 	float spawnTimer = 2;
@@ -83,23 +83,15 @@ int main(int argc, char* argv[]) {
 		//mouse input
 		Vector2 mousePosition = g_engine.GetInput().GetMousePosition();
 
-		//drum input
-		if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_Q) && !g_engine.GetInput().GetPrevKeyDown(SDL_SCANCODE_Q))g_engine.GetAudio().PlaySound("bass.wav");
-		if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_A) && !g_engine.GetInput().GetPrevKeyDown(SDL_SCANCODE_A))g_engine.GetAudio().PlaySound("snare.wav");
-		if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_Z) && !g_engine.GetInput().GetPrevKeyDown(SDL_SCANCODE_Z))g_engine.GetAudio().PlaySound("open-hat.wav");
-		if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_X) && !g_engine.GetInput().GetPrevKeyDown(SDL_SCANCODE_X))g_engine.GetAudio().PlaySound("close-hat.wav");
-		if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_S) && !g_engine.GetInput().GetPrevKeyDown(SDL_SCANCODE_S))g_engine.GetAudio().PlaySound("clap.wav");
-		if (g_engine.GetInput().GetKeyDown(SDL_SCANCODE_W) && !g_engine.GetInput().GetPrevKeyDown(SDL_SCANCODE_W))g_engine.GetAudio().PlaySound("cowbell.wav");
-		
 	//Update
 		scene->Update(time.GetDeltaTime());
 
 		spawnTimer -= time.GetDeltaTime();
 		if (spawnTimer <= 0) {
-			auto* enemy = new Enemy(400, Transform{ {g_engine.GetRenderer().GetWidth(),g_engine.GetRenderer().GetHeight()},0,2 }, enemyModel);
+			auto enemy = std::make_unique<Enemy>(400.0f, Transform{ {g_engine.GetRenderer().GetWidth(),g_engine.GetRenderer().GetHeight()},0.0f,2.0f }, enemyModel);
 			enemy->SetTag("Enemy");
 			enemy->SetDamping(1.0f);
-			scene->AddActor(enemy);
+			scene->AddActor(move(enemy));
 			spawnTimer = 2;
 		}
 
@@ -112,16 +104,6 @@ int main(int argc, char* argv[]) {
 			if (particle.position.x > 800) particle.position.x = 0;
 			if (particle.position.x < 0) particle.position.x = 800;
 		}
-
-		//create particles
-		if (g_engine.GetInput().getMouseButtonDown(0)) {
-			particles.push_back(Particle{ {mousePosition.x,mousePosition.y},
-				{randomf(-50.0f,50.0f), randomf(-50.0f,50.0f)},{randomf(1.0f,5.0f)},
-				random(0,255),random(0,255),random(0,255),random(0,255)});		
-		}
-
-		//update drums
-		g_engine.GetAudio().Update();
 
 	//Draw
 		//clear screen

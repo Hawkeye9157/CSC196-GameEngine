@@ -30,6 +30,7 @@
     <ClInclude Include="Source\MathUtils.h" />
     <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\Particle.h" />
+    <ClInclude Include="Source\ParticleSystem.h" />
     <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\Renderer.h" />
     <ClInclude Include="Source\Scene.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="Source\Font.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\ParticleSystem.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\Scene.cpp" />

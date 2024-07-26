@@ -4,9 +4,10 @@ Engine g_engine;
 
 bool Engine::Initialize()
 {
-	m_renderer = new Renderer();
-	m_input = new Input();
-	m_audio = new Audio();
+	m_renderer = std::make_unique<Renderer>();
+	m_input = std::make_unique<Input>();
+	m_audio = std::make_unique<Audio>();
+	m_ps = std::make_unique<ParticleSystem>();
 
 	m_renderer->Initialize();
 	m_renderer->CreateWindow("Game Engine", 800, 600);
@@ -27,5 +28,6 @@ void Engine::Update()
 {
 	m_input->Update();
 	m_audio->Update();
+	m_ps->Update(m_time->GetDeltaTime());
 
 }

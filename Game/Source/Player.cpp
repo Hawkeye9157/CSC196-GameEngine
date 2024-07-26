@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Engine.h"
+#include "Model.h"
 #include "Bullet.h"
 #include "Scene.h"
 #include "SpaceGame.h"
@@ -42,10 +43,10 @@ void Player::Update(float dt)
 
 		
 
-		Bullet* bullet = new Bullet{ 400,transform,model };
+		auto bullet = std::make_unique<Bullet>(400,transform,model);
 		bullet->SetLifespan(1);
 		bullet->SetTag("Player");
-		m_scene->AddActor(bullet);
+		m_scene->AddActor(std::move(bullet));
 		
 	}
 

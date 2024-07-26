@@ -12,5 +12,5 @@ public:
 	virtual void OnCollision(Actor* actor);
 
 private:
-	float m_sped = 0;
+	float m_sped = 0.0f;
 };
