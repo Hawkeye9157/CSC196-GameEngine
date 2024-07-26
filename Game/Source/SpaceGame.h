@@ -37,6 +37,7 @@ protected:
     eState m_state{ eState::Title };
     float m_spawnTimer{ 0 };
     float m_spawnTime{ 0 };
+    float m_stateTimer{ 0 };
 
     Font* m_font{ nullptr };
     Text* m_textScore{ nullptr };

@@ -69,9 +69,7 @@ void SpaceGame::Update(float dt)
         m_scene->RemoveAll();
         {
             Transform transform{ Vector2{ 400, 300 }, 0, 3 };
-
             Model* model = new Model{ GameData::shipPoints, Color{0,0,1,0} };
-            Transform transform{ Vector2{randomf(0,800),randomf(0,600)},0,randomf(1,5) };
             auto player = std::make_unique<Player>(randomf(300, 500), transform, model);
             player->SetDamping(2.0f);
             player->SetTag("Player");
@@ -90,7 +88,7 @@ void SpaceGame::Update(float dt)
         if (m_spawnTimer <= 0) {
             m_spawnTimer = m_spawnTime;
 
-            auto* enemyModel = new Model{ points, Color{1,0,1,0} };
+            auto* enemyModel = new Model{ GameData::shipPoints, Color{1,0,1,0} };
             auto enemy = std::make_unique<Enemy>(400.0f, Transform{ {g_engine.GetRenderer().GetWidth(),g_engine.GetRenderer().GetHeight()},0.0f,2.0f }, enemyModel);
             enemy->SetTag("Enemy");
             enemy->SetDamping(1.0f);
@@ -106,7 +104,7 @@ void SpaceGame::Update(float dt)
     case SpaceGame::eState::PlayerDead:
         m_lives--;
         m_state = (m_lives == 0) ? eState::GameOver : eState::PlayerDead;
-         m_statetimer = 3;
+         m_stateTimer = 3;
 
         break;
 

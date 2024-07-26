@@ -3,5 +3,5 @@
 #include <vector>
 
 namespace GameData {
-	extern const std::vector<Vector2> shipPoints;
+	 const std::vector<Vector2> shipPoints;
 }
